@@ -21,15 +21,13 @@ public class GameScene: SKScene {
     // MARK: - Lifecycle
     
     override public func didMove(to view: SKView) {
-        backgroundColor = .white
         
+        backgroundColor = .white
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
-        physicsBody?.categoryBitMask = PhysicsCategory.floor.bitMask
-        physicsBody?.collisionBitMask = PhysicsCategory.module.bitMask
-        physicsBody?.contactTestBitMask = PhysicsCategory.module.bitMask
-    
         physicsWorld.contactDelegate = gameLayer
+        
         controlLayer.gameLayer = gameLayer
+        
         addLayers(layers: layers)
     }
     
