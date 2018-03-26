@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol GameLayerProtocol: LayerProtocol {
+public protocol ControlableLayer: LayerProtocol {
     
     func onLeftButtonPressed()
     func onLeftButtonUnpressed()
@@ -18,7 +18,7 @@ public protocol GameLayerProtocol: LayerProtocol {
     func onJumpButtonUnpressed()
 }
 
-public extension GameLayerProtocol {
+public extension ControlableLayer {
     
     public func onLeftButtonPressed() {}
     public func onLeftButtonUnpressed() {}

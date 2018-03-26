@@ -17,7 +17,7 @@ public enum ScreenSide: CGFloat {
     }
 }
 
-public class GameLayer: SKNode, SKPhysicsContactDelegate, GameLayerProtocol {
+public class GameLayer: SKNode, SKPhysicsContactDelegate, ControlableLayer {
     
     // MARK: - LayerProtocol properties
     

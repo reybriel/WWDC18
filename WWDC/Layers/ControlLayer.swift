@@ -19,7 +19,7 @@ public class ControlLayer: SKNode, LayerProtocol {
     
     // MARK: - Properties
     
-    public var gameLayer: GameLayerProtocol?
+    public var controlable: ControlableLayer?
     
     private let backButton = GRButton(
         imageNamed: "left",
@@ -67,12 +67,12 @@ public class ControlLayer: SKNode, LayerProtocol {
         
         jumpButton.holdingEnabled = false
         
-        backButton.onButtonPressed = { _ in self.gameLayer?.onLeftButtonPressed() }
-        backButton.onButtonReleased = { _ in self.gameLayer?.onLeftButtonUnpressed() }
-        frontButton.onButtonPressed = { _ in self.gameLayer?.onRightButtonPressed() }
-        frontButton.onButtonReleased = { _ in self.gameLayer?.onRightButtonUnpressed() }
-        jumpButton.onButtonPressed = { _ in self.gameLayer?.onJumpButtonPressed() }
-        jumpButton.onButtonReleased = { _ in self.gameLayer?.onJumpButtonUnpressed() }
+        backButton.onButtonPressed = { _ in self.controlable?.onLeftButtonPressed() }
+        backButton.onButtonReleased = { _ in self.controlable?.onLeftButtonUnpressed() }
+        frontButton.onButtonPressed = { _ in self.controlable?.onRightButtonPressed() }
+        frontButton.onButtonReleased = { _ in self.controlable?.onRightButtonUnpressed() }
+        jumpButton.onButtonPressed = { _ in self.controlable?.onJumpButtonPressed() }
+        jumpButton.onButtonReleased = { _ in self.controlable?.onJumpButtonUnpressed() }
         
         layoutButtons()
     }

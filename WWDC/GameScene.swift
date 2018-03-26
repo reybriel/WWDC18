@@ -26,7 +26,7 @@ public class GameScene: SKScene {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = gameLayer
         
-        controlLayer.gameLayer = gameLayer
+        controlLayer.controlable = gameLayer
         
         addLayers(layers: layers)
     }
