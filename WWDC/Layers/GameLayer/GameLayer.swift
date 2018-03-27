@@ -27,6 +27,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     private var listeners: [GameListenerLayer] = []
     
     private var ball: GRBall!
+    private var floor: GRFloor!
     private var phase = 1
     
     // MARK: - Initializers
@@ -43,6 +44,16 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     private func commonInit() {
         
+        floor = GRFloor(worldFrame: frame)
+        
+        floor.createObstacle(
+            ofSize: CGSize(
+                width: 20.0,
+                height: 100.0
+            ),
+            atPosition: 0.0
+        )
+        
         ball = GRBall(
             color: .red,
             placedAt: CGPoint(
@@ -51,9 +62,8 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
             )
         )
         
+        addChild(floor.node)
         addChild(ball.node)
-        createFloor()
-        createObstacle()
     }
     
     // MARK: - Methods
@@ -122,72 +132,5 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         else if moduleBody.collided(with: .obstacle, in: contact) {
             ball.fall()
         }
-    }
-    
-    // MARK: - Creators
-    
-    private func createObstacle() {
-        
-        let obstacleSize = CGSize(
-            width: 20.0,
-            height: 110.0
-        )
-        
-        let obstacle = SKShapeNode(
-            rectOf: obstacleSize,
-            cornerRadius: 5.0
-        )
-        
-        obstacle.fillColor = .blue
-        
-        obstacle.position = CGPoint(
-            x: frame.midX,
-            y: 125.0
-        )
-        
-        obstacle.physicsBody = SKPhysicsBody(
-            rectangleOf: obstacleSize
-        )
-        
-        obstacle.physicsBody?.allowsRotation = false
-        obstacle.physicsBody?.affectedByGravity = false
-        obstacle.physicsBody?.isDynamic = false
-        obstacle.physicsBody?.categoryBitMask = PhysicsCategory.obstacle.bitMask
-        obstacle.physicsBody?.collisionBitMask = PhysicsCategory.module.bitMask
-        obstacle.physicsBody?.contactTestBitMask = PhysicsCategory.module.bitMask
-        
-        addChild(obstacle)
-    }
-    
-    private func createFloor() {
-        
-        let floorSize = CGSize(
-            width: frame.width,
-            height: 80.0
-        )
-        
-        let floor = SKShapeNode(
-            rectOf: floorSize
-        )
-        
-        floor.fillColor = .blue
-        
-        floor.position = CGPoint(
-            x: frame.midX,
-            y: 40.0
-        )
-        
-        floor.physicsBody = SKPhysicsBody(
-            rectangleOf: floorSize
-        )
-        
-        floor.physicsBody?.allowsRotation = false
-        floor.physicsBody?.affectedByGravity = false
-        floor.physicsBody?.isDynamic = false
-        floor.physicsBody?.categoryBitMask = PhysicsCategory.floor.bitMask
-        floor.physicsBody?.collisionBitMask = PhysicsCategory.module.bitMask
-        floor.physicsBody?.contactTestBitMask = PhysicsCategory.module.bitMask
-        
-        addChild(floor)
     }
 }
