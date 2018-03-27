@@ -12,11 +12,11 @@ public class GameScene: SKScene {
     
     // MARK: - Scene layers
     
-    private let gameLayer = GameLayer()
-    private let textLayer = TextLayer()
-    private var controlLayer = ControlLayer()
+    fileprivate let gameLayer = GameLayer()
+    fileprivate let textLayer = TextLayer()
+    fileprivate var controlLayer = ControlLayer()
     
-    private lazy var layers: [LayerProtocol] = [gameLayer, textLayer, controlLayer]
+    fileprivate lazy var layers: [LayerProtocol] = [gameLayer, textLayer, controlLayer]
     
     // MARK: - Lifecycle
     
@@ -26,11 +26,36 @@ public class GameScene: SKScene {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = gameLayer
         
-        gameLayer.register(listener: textLayer)
-        
+        gameLayer.listener = self
         controlLayer.controlable = gameLayer
         
         addLayers(layers: layers)
+    }
+}
+
+extension GameScene: GameListener {
+    
+    // MARK: - Game listener methods
+    
+    public func started(phase: Int) {
+        textLayer.showInstruction(for: phase)
+    }
+    
+    public func finished(phase: Int) {
+        textLayer.showMessage(for: phase)
+    }
+    
+    // MARK: - Auxiliars
+    
+    private func addLayers(layers: [LayerProtocol]) {
+        layers.forEach { (layer) in
+            addLayer(layer: layer)
+        }
+    }
+    
+    private func addLayer(layer: LayerProtocol) {
+        addChild(layer.layerNode)
+        layer.wasAdded(to: self)
     }
     
     // MARK: - Touches
@@ -53,26 +78,13 @@ public class GameScene: SKScene {
     
     // MARK: - Update
     
-    public override func update(_ currentTime: TimeInterval) {
-        updateLayers(currentTime)
-    }
-    
     private func updateLayers(_ currentTime: TimeInterval) {
         layers.forEach { (layer) in
             layer.update(currentTime)
         }
     }
     
-    // MARK: - Auxiliars
-    
-    private func addLayers(layers: [LayerProtocol]) {
-        layers.forEach { (layer) in
-            addLayer(layer: layer)
-        }
-    }
-    
-    private func addLayer(layer: LayerProtocol) {
-        addChild(layer.layerNode)
-        layer.wasAdded(to: self)
+    public override func update(_ currentTime: TimeInterval) {
+        updateLayers(currentTime)
     }
 }

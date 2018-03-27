@@ -8,13 +8,13 @@
 
 import Foundation
 
-public protocol GameListenerLayer: LayerProtocol {
+public protocol GameListener {
     
     func started(phase: Int)
     func finished(phase: Int)
 }
 
-public extension GameListenerLayer {
+public extension GameListener {
     
     public func started(phase: Int) {}
     public func finished(phase: Int) {}

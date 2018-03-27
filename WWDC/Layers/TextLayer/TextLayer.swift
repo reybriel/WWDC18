@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class TextLayer: ScreenSizeNode, GameListenerLayer {
+class TextLayer: ScreenSizeNode, LayerProtocol {
     
     // MARK: - LayerProtocol properties
     
@@ -26,6 +26,23 @@ class TextLayer: ScreenSizeNode, GameListenerLayer {
         "What if you couldn't jump anymore?",
         "Try now!"
     ]
+    
+    private lazy var showAction: SKAction = SKAction.moveBy(
+        x: 0.0,
+        y: -50.0,
+        duration: 0.8
+    )
+    
+    private lazy var hideSequence: SKAction = SKAction.sequence(
+        [
+            SKAction.moveBy(
+                x: 0.0,
+                y: 50.0,
+                duration: 0.2
+            ),
+            SKAction.removeFromParent()
+        ]
+    )
     
     // MARK: - Initializers
     
@@ -45,38 +62,22 @@ class TextLayer: ScreenSizeNode, GameListenerLayer {
                 x: frame.midX,
                 y: frame.height + instructionLabel.frame.height
         )
-        addChild(instructionLabel)
-    }
-    
-    // MARK: - Game listener methods
-    
-    func started(phase: Int) {
-        
-        instructionLabel.text = instructions[phase - 1]
-        
-        instructionLabel.run(
-            SKAction.moveBy(
-                x: 0.0,
-                y: -50.0,
-                duration: 0.8
-            )
-        )
-    }
-    
-    func finished(phase: Int) {
-        hideInstruction()
-        
     }
     
     // MARK: - Methods
     
-    private func hideInstruction() {
+    public func showInstruction(for phase: Int) {
         
-        let hide = SKAction.moveBy(
-            x: 0.0,
-            y: 50.0,
-            duration: 0.2
-        )
-        instructionLabel.run(hide)
+        instructionLabel.text = instructions[phase - 1]
+        addChild(instructionLabel)
+        instructionLabel.run(showAction)
+    }
+    
+    public func hideInstruction() {
+        instructionLabel.run(hideSequence)
+    }
+    
+    public func showMessage(for phase: Int) {
+        hideInstruction()
     }
 }

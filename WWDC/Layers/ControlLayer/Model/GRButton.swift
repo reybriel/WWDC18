@@ -31,6 +31,7 @@ public class GRButton: SKSpriteNode {
     }
     
     public var holdingEnabled: Bool = true
+    public var enabled: Bool = true
     
     private var holdingTimer: Timer? = nil
     
@@ -64,10 +65,21 @@ public class GRButton: SKSpriteNode {
     
     public func press() {
         
-        if isNotPressed {
+        if isNotPressed && enabled {
             texture = focusedTexture
             holdingUpdate()
             isNotPressed = false
+        }
+    }
+    
+    public func unpress() {
+        
+        if isPressed && enabled {
+            texture = unfocusedTexture
+            holdingTimer?.invalidate()
+            holdingTimer = nil
+            self.onButtonReleased?(self)
+            isPressed = false
         }
     }
     
@@ -81,16 +93,5 @@ public class GRButton: SKSpriteNode {
         }
         )
         holdingTimer?.fire()
-    }
-    
-    public func unpress() {
-        
-        if isPressed {
-            texture = unfocusedTexture
-            holdingTimer?.invalidate()
-            holdingTimer = nil
-            self.onButtonReleased?(self)
-            isPressed = false
-        }
     }
 }

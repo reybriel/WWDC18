@@ -24,7 +24,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     // MARK: - Properties
     
-    private var listeners: [GameListenerLayer] = []
+    public var listener: GameListener?
     
     private var ball: GRBall!
     private var floor: GRFloor!
@@ -68,16 +68,12 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     // MARK: - Methods
     
-    public func register(listener: GameListenerLayer) {
-        listeners.append(listener)
-    }
-    
     private func triggerPhaseStart() {
-        listeners.forEach { $0.started(phase: phase) }
+        listener?.started(phase: phase)
     }
     
     private func triggerPhaseEnd() {
-        listeners.forEach { $0.finished(phase: phase) }
+        listener?.finished(phase: phase)
         phase += phase <= 3 ? 1 : 0
     }
     
