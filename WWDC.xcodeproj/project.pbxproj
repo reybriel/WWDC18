@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0814EB0B206A6DA300D7AC4B /* GRFloor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0814EB0A206A6DA300D7AC4B /* GRFloor.swift */; };
 		08155C1B2065907300926AD1 /* GRPhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08155C1A2065907300926AD1 /* GRPhysicsCategory.swift */; };
+		08334547206ABA550015BF81 /* InstructionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08334546206ABA550015BF81 /* InstructionLabel.swift */; };
+		08334549206AC7070015BF81 /* GRObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08334548206AC7070015BF81 /* GRObstacle.swift */; };
 		0838F13020667A9300DD4B56 /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838F12F20667A9300DD4B56 /* CGFloat+Extension.swift */; };
 		0838F1322066878100DD4B56 /* LayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838F1312066878100DD4B56 /* LayerProtocol.swift */; };
 		0838F1342066888E00DD4B56 /* ControlableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838F1332066888E00DD4B56 /* ControlableLayer.swift */; };
@@ -30,6 +32,8 @@
 /* Begin PBXFileReference section */
 		0814EB0A206A6DA300D7AC4B /* GRFloor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFloor.swift; sourceTree = "<group>"; };
 		08155C1A2065907300926AD1 /* GRPhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRPhysicsCategory.swift; sourceTree = "<group>"; };
+		08334546206ABA550015BF81 /* InstructionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionLabel.swift; sourceTree = "<group>"; };
+		08334548206AC7070015BF81 /* GRObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRObstacle.swift; sourceTree = "<group>"; };
 		0838F12F20667A9300DD4B56 /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		0838F1312066878100DD4B56 /* LayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerProtocol.swift; sourceTree = "<group>"; };
 		0838F1332066888E00DD4B56 /* ControlableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlableLayer.swift; sourceTree = "<group>"; };
@@ -61,6 +65,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08334545206ABA480015BF81 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				08334546206ABA550015BF81 /* InstructionLabel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		086C574B2069C8DB00C0A1AC /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				086D470F206968BE00645CB9 /* TextLayer.swift */,
+				08334545206ABA480015BF81 /* Model */,
 			);
 			path = TextLayer;
 			sourceTree = "<group>";
@@ -130,6 +143,7 @@
 				08155C1A2065907300926AD1 /* GRPhysicsCategory.swift */,
 				0881F2E4206186E3004C7FE5 /* GRBall.swift */,
 				0814EB0A206A6DA300D7AC4B /* GRFloor.swift */,
+				08334548206AC7070015BF81 /* GRObstacle.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -276,6 +290,7 @@
 				0881F2F52061A9FE004C7FE5 /* GRButton.swift in Sources */,
 				086C574D2069C9A200C0A1AC /* ScreenSizeNode.swift in Sources */,
 				0881F2EB20619B3D004C7FE5 /* GameLayer.swift in Sources */,
+				08334547206ABA550015BF81 /* InstructionLabel.swift in Sources */,
 				0881F2E5206186E3004C7FE5 /* GRBall.swift in Sources */,
 				0838F13020667A9300DD4B56 /* CGFloat+Extension.swift in Sources */,
 				0838F1322066878100DD4B56 /* LayerProtocol.swift in Sources */,
@@ -285,6 +300,7 @@
 				0814EB0B206A6DA300D7AC4B /* GRFloor.swift in Sources */,
 				0881F2D0206177F7004C7FE5 /* GameViewController.swift in Sources */,
 				0881F2C8206177F7004C7FE5 /* AppDelegate.swift in Sources */,
+				08334549206AC7070015BF81 /* GRObstacle.swift in Sources */,
 				086D47142069744300645CB9 /* GameListenerLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

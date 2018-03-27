@@ -44,15 +44,16 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     private func commonInit() {
         
-        floor = GRFloor(worldFrame: frame)
-        
-        floor.createObstacle(
-            ofSize: CGSize(
-                width: 20.0,
-                height: 100.0
-            ),
-            atPosition: 0.0
+        floor = GRFloor(
+            frame: CGRect(
+                x: 0.0,
+                y: 75.0,
+                width: frame.width,
+                height: 5.0
+            )
         )
+        
+        floor.createObstacle(atPoint: 0.5)
         
         ball = GRBall(
             color: .red,
@@ -64,23 +65,39 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         
         addChild(floor.node)
         addChild(ball.node)
+        magicBox()
+    }
+    
+    // MARK: - Tricks
+    
+    private func magicBox() {
+        
+        let magicNode = SKShapeNode(
+            rect: CGRect(
+                x: 0.0,
+                y: 0.0,
+                width: frame.width,
+                height: 75.0
+            )
+        )
+        
+        magicNode.fillColor = .white
+        magicNode.strokeColor = .white
+        
+        addChild(magicNode)
     }
     
     // MARK: - Methods
-    
-    private func triggerPhaseStart() {
-        listener?.started(phase: phase)
-    }
     
     private func triggerPhaseEnd() {
         listener?.finished(phase: phase)
         phase += phase <= 3 ? 1 : 0
     }
     
-    // MARK: - "Lifecycle"
+    // MARK: - "Layer Lifecycle"
     
     public func wasAdded(to scene: SKScene) {
-        triggerPhaseStart()
+        listener?.started(phase: phase)
     }
     
     // MARK: - Controlable

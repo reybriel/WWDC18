@@ -19,30 +19,13 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
     
     // MARK: - Properties
     
-    private let instructionLabel = SKLabelNode()
+    private let instructionLabel = InstructionLabel()
     
     private let instructions = [
         "Pass the ball to the other side",
         "What if you couldn't jump anymore?",
         "Try now!"
     ]
-    
-    private lazy var showAction: SKAction = SKAction.moveBy(
-        x: 0.0,
-        y: -50.0,
-        duration: 0.8
-    )
-    
-    private lazy var hideSequence: SKAction = SKAction.sequence(
-        [
-            SKAction.moveBy(
-                x: 0.0,
-                y: 50.0,
-                duration: 0.2
-            ),
-            SKAction.removeFromParent()
-        ]
-    )
     
     // MARK: - Initializers
     
@@ -62,6 +45,7 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
                 x: frame.midX,
                 y: frame.height + instructionLabel.frame.height
         )
+        addChild(instructionLabel)
     }
     
     // MARK: - Methods
@@ -69,15 +53,15 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
     public func showInstruction(for phase: Int) {
         
         instructionLabel.text = instructions[phase - 1]
-        addChild(instructionLabel)
-        instructionLabel.run(showAction)
+        instructionLabel.show()
     }
     
     public func hideInstruction() {
-        instructionLabel.run(hideSequence)
+        instructionLabel.hide()
     }
     
     public func showMessage(for phase: Int) {
         hideInstruction()
     }
+    
 }
