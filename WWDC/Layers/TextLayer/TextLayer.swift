@@ -65,6 +65,7 @@ class TextLayer: ScreenSizeNode, GameListenerLayer {
     
     func finished(phase: Int) {
         hideInstruction()
+        
     }
     
     // MARK: - Methods
