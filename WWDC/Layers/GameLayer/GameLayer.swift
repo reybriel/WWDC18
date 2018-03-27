@@ -27,6 +27,8 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     private var floor: GRFloor!
     private var phase = 1
     
+    private var triggerFlag = false
+    
     // MARK: - Initializers
     
     override public init() {
@@ -86,9 +88,21 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     // MARK: - Methods
     
+    private func triggerPhaseStart() {
+        
+        if !triggerFlag {
+            listener?.started(phase: phase)
+            triggerFlag = true
+        }
+    }
+    
     private func triggerPhaseEnd() {
-        listener?.finished(phase: phase)
-        phase += phase <= 3 ? 1 : 0
+        
+        if triggerFlag {
+            listener?.finished(phase: phase)
+            phase += phase < 3 ? 1 : 0
+            triggerFlag = false
+        }
     }
     
     // MARK: - "Layer Lifecycle"
@@ -119,29 +133,29 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         ball.jump()
     }
     
+    // MARK: - Layer protocol
+    
+    public func update(_ currentTime: TimeInterval) {
+        
+        switch ball.screenSide(onFrame: frame) {
+            
+        case .left:
+            triggerPhaseStart()
+            break
+            
+        case .right:
+            triggerPhaseEnd()
+            break
+        }
+    }
+    
     // MARK: - SKPhysicsContactDelegate methods
     
     public func didBegin(_ contact: SKPhysicsContact) {
         
         let moduleBody = GRPhysicsCategory.module
         
-        if moduleBody.collided(with: .floor, in: contact) {
-            
-            ball.fall()
-            
-            switch ball.screenSide(onFrame: frame) {
-                
-            case .left:
-                
-                break
-                
-            case .right:
-                triggerPhaseEnd()
-                break
-            }
-        }
-            
-        else if moduleBody.collided(with: .obstacle, in: contact) {
+        if moduleBody.collided(with: .floor, in: contact) || moduleBody.collided(with: .obstacle, in: contact) {
             ball.fall()
         }
     }
