@@ -9,10 +9,15 @@
 import SpriteKit
 
 public protocol LayerProtocol {
+    
     var layerNode: SKNode { get }
+    
+    func wasAdded(to scene: SKScene)
     func update(_ currentTime: TimeInterval)
 }
 
 public extension LayerProtocol {
+    
+    func wasAdded(to scene: SKScene) {}
     func update(_ currentTime: TimeInterval) {}
 }

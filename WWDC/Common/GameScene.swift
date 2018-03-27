@@ -26,7 +26,8 @@ public class GameScene: SKScene {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsWorld.contactDelegate = gameLayer
         
-        gameLayer.reporter = textLayer
+        gameLayer.register(listener: textLayer)
+        
         controlLayer.controlable = gameLayer
         
         addLayers(layers: layers)
@@ -72,5 +73,6 @@ public class GameScene: SKScene {
     
     private func addLayer(layer: LayerProtocol) {
         addChild(layer.layerNode)
+        layer.wasAdded(to: self)
     }
 }

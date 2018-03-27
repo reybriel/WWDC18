@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class TextLayer: ScreenSizeNode, ReporterLayer {
+class TextLayer: ScreenSizeNode, GameListenerLayer {
     
     // MARK: - LayerProtocol properties
     
@@ -16,6 +16,16 @@ class TextLayer: ScreenSizeNode, ReporterLayer {
         zPosition = 15
         return self
     }
+    
+    // MARK: - Properties
+    
+    private let instructionLabel = SKLabelNode()
+    
+    private let instructions = [
+        "Pass the ball to the other side",
+        "What if you couldn't jump anymore?",
+        "Try now!"
+    ]
     
     // MARK: - Initializers
     
@@ -30,42 +40,42 @@ class TextLayer: ScreenSizeNode, ReporterLayer {
     }
 
     private func commonInit() {
-        
+        instructionLabel.fontColor = .black
+        instructionLabel.position = CGPoint(
+                x: frame.midX,
+                y: frame.height + instructionLabel.frame.height
+        )
+        addChild(instructionLabel)
     }
     
-    // MARK: - ReporterLayer methods
+    // MARK: - Game listener methods
     
-    public func displayTexts(ofPhase phase: Int) {
+    func started(phase: Int) {
         
-        switch phase {
-            
-        case 1: break
-        default: break
-        }
+        instructionLabel.text = instructions[phase - 1]
+        
+        instructionLabel.run(
+            SKAction.moveBy(
+                x: 0.0,
+                y: -50.0,
+                duration: 0.8
+            )
+        )
     }
     
-    public func displayInstruction(ofPhase phase: Int) {
-        
-        switch phase {
-            
-        case 1:
-            instrucition1()
-            break
-        default: break
-        }
+    func finished(phase: Int) {
+        hideInstruction()
     }
     
-    // MARK: - Text layer methods
+    // MARK: - Methods
     
-    private func instrucition1() {
+    private func hideInstruction() {
         
-        let label = SKLabelNode(text: "Pass the ball to the other side")
-        label.fontColor = .black
-        label.position = CGPoint(x: frame.midX, y: frame.height + label.frame.height + 30.0)
-        
-        let action = SKAction.moveTo(y: frame.height - label.frame.height - 30.0, duration: 0.8)
-        
-        addChild(label)
-        label.run(action)
+        let hide = SKAction.moveBy(
+            x: 0.0,
+            y: 50.0,
+            duration: 0.2
+        )
+        instructionLabel.run(hide)
     }
 }

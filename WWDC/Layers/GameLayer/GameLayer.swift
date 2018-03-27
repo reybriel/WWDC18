@@ -24,7 +24,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     // MARK: - Properties
     
-    public var reporter: ReporterLayer?
+    private var listeners: [GameListenerLayer] = []
     
     private var ball: GRBall!
     private var phase = 1
@@ -54,6 +54,27 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         addChild(ball.node)
         createFloor()
         createObstacle()
+    }
+    
+    // MARK: - Methods
+    
+    public func register(listener: GameListenerLayer) {
+        listeners.append(listener)
+    }
+    
+    private func triggerPhaseStart() {
+        listeners.forEach { $0.started(phase: phase) }
+    }
+    
+    private func triggerPhaseEnd() {
+        listeners.forEach { $0.finished(phase: phase) }
+        phase += 1
+    }
+    
+    // MARK: - "Lifecycle"
+    
+    public func wasAdded(to scene: SKScene) {
+        triggerPhaseStart()
     }
     
     // MARK: - Controlable
@@ -92,7 +113,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
                 
             case .left: break
             case .right:
-                
+                triggerPhaseEnd()
                 break
             }
         }
