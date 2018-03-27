@@ -132,9 +132,9 @@ public class GRBall {
             circleOfRadius: ballSize.width/2
         )
         node.physicsBody?.allowsRotation = false
-        node.physicsBody?.categoryBitMask = PhysicsCategory.module.bitMask
-        node.physicsBody?.collisionBitMask = PhysicsCategory.floor.bitMask | PhysicsCategory.obstacle.bitMask
-        node.physicsBody?.contactTestBitMask = PhysicsCategory.floor.bitMask | PhysicsCategory.obstacle.bitMask
+        node.physicsBody?.categoryBitMask = GRPhysicsCategory.module.bitMask
+        node.physicsBody?.collisionBitMask = GRPhysicsCategory.floor.bitMask | GRPhysicsCategory.obstacle.bitMask
+        node.physicsBody?.contactTestBitMask = GRPhysicsCategory.floor.bitMask | GRPhysicsCategory.obstacle.bitMask
         
         node.position = point
         

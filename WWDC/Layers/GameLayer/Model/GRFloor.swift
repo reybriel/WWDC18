@@ -33,9 +33,9 @@ public class GRFloor {
         
         obstacle.physicsBody = GRFloor.commonPhysicsBody(ofSize: size)
         
-        obstacle.physicsBody?.categoryBitMask = PhysicsCategory.obstacle.bitMask
-        obstacle.physicsBody?.collisionBitMask = PhysicsCategory.module.bitMask
-        obstacle.physicsBody?.contactTestBitMask = PhysicsCategory.module.bitMask
+        obstacle.physicsBody?.categoryBitMask = GRPhysicsCategory.obstacle.bitMask
+        obstacle.physicsBody?.collisionBitMask = GRPhysicsCategory.module.bitMask
+        obstacle.physicsBody?.contactTestBitMask = GRPhysicsCategory.module.bitMask
         
         node.addChild(obstacle)
     }
@@ -60,9 +60,9 @@ public class GRFloor {
         
         floor.physicsBody = GRFloor.commonPhysicsBody(ofSize: floorSize)
         
-        floor.physicsBody?.categoryBitMask = PhysicsCategory.floor.bitMask
-        floor.physicsBody?.collisionBitMask = PhysicsCategory.module.bitMask
-        floor.physicsBody?.contactTestBitMask = PhysicsCategory.module.bitMask
+        floor.physicsBody?.categoryBitMask = GRPhysicsCategory.floor.bitMask
+        floor.physicsBody?.collisionBitMask = GRPhysicsCategory.module.bitMask
+        floor.physicsBody?.contactTestBitMask = GRPhysicsCategory.module.bitMask
         
         return floor
     }

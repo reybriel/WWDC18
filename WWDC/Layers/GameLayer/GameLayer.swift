@@ -78,7 +78,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     private func triggerPhaseEnd() {
         listeners.forEach { $0.finished(phase: phase) }
-        phase += 1
+        phase += phase <= 3 ? 1 : 0
     }
     
     // MARK: - "Lifecycle"
@@ -113,7 +113,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     public func didBegin(_ contact: SKPhysicsContact) {
         
-        let moduleBody = PhysicsCategory.module
+        let moduleBody = GRPhysicsCategory.module
         
         if moduleBody.collided(with: .floor, in: contact) {
             
@@ -121,7 +121,8 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
             
             switch ball.screenSide(onFrame: frame) {
                 
-            case .left: break
+            case .left:
+                break
                 
             case .right:
                 triggerPhaseEnd()

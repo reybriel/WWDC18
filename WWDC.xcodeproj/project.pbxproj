@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0814EB0B206A6DA300D7AC4B /* GRFloor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0814EB0A206A6DA300D7AC4B /* GRFloor.swift */; };
-		08155C1B2065907300926AD1 /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08155C1A2065907300926AD1 /* PhysicsCategory.swift */; };
+		08155C1B2065907300926AD1 /* GRPhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08155C1A2065907300926AD1 /* GRPhysicsCategory.swift */; };
 		0838F13020667A9300DD4B56 /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838F12F20667A9300DD4B56 /* CGFloat+Extension.swift */; };
 		0838F1322066878100DD4B56 /* LayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838F1312066878100DD4B56 /* LayerProtocol.swift */; };
 		0838F1342066888E00DD4B56 /* ControlableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838F1332066888E00DD4B56 /* ControlableLayer.swift */; };
@@ -29,7 +29,7 @@
 
 /* Begin PBXFileReference section */
 		0814EB0A206A6DA300D7AC4B /* GRFloor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRFloor.swift; sourceTree = "<group>"; };
-		08155C1A2065907300926AD1 /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
+		08155C1A2065907300926AD1 /* GRPhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRPhysicsCategory.swift; sourceTree = "<group>"; };
 		0838F12F20667A9300DD4B56 /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		0838F1312066878100DD4B56 /* LayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerProtocol.swift; sourceTree = "<group>"; };
 		0838F1332066888E00DD4B56 /* ControlableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlableLayer.swift; sourceTree = "<group>"; };
@@ -127,6 +127,7 @@
 		086C57542069CB6500C0A1AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				08155C1A2065907300926AD1 /* GRPhysicsCategory.swift */,
 				0881F2E4206186E3004C7FE5 /* GRBall.swift */,
 				0814EB0A206A6DA300D7AC4B /* GRFloor.swift */,
 			);
@@ -136,7 +137,6 @@
 		086C57552069CB9100C0A1AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				08155C1A2065907300926AD1 /* PhysicsCategory.swift */,
 				0881F2F42061A9FE004C7FE5 /* GRButton.swift */,
 			);
 			path = Model;
@@ -281,7 +281,7 @@
 				0838F1322066878100DD4B56 /* LayerProtocol.swift in Sources */,
 				0881F2ED20619B4F004C7FE5 /* ControlLayer.swift in Sources */,
 				086D4710206968BE00645CB9 /* TextLayer.swift in Sources */,
-				08155C1B2065907300926AD1 /* PhysicsCategory.swift in Sources */,
+				08155C1B2065907300926AD1 /* GRPhysicsCategory.swift in Sources */,
 				0814EB0B206A6DA300D7AC4B /* GRFloor.swift in Sources */,
 				0881F2D0206177F7004C7FE5 /* GameViewController.swift in Sources */,
 				0881F2C8206177F7004C7FE5 /* AppDelegate.swift in Sources */,
