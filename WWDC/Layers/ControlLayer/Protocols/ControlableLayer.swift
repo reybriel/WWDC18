@@ -1,5 +1,5 @@
 //
-//  ControlDelegate.swift
+//  ControlableLayer.swift
 //  WWDC
 //
 //  Created by Gabriel Reynoso on 24/03/2018.

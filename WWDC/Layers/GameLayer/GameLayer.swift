@@ -11,13 +11,9 @@ import SpriteKit
 public enum ScreenSide: CGFloat {
     case right = 1.0
     case left = -1.0
-    
-    public static func side(xPosition x: CGFloat) -> ScreenSide {
-        return x < 0 ? .left : .right
-    }
 }
 
-public class GameLayer: SKNode, SKPhysicsContactDelegate, ControlableLayer {
+public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLayer {
     
     // MARK: - LayerProtocol properties
     
@@ -28,23 +24,10 @@ public class GameLayer: SKNode, SKPhysicsContactDelegate, ControlableLayer {
     
     // MARK: - Properties
     
-    public var textLayer: TextLayerProtocol?
-    public var controlLayer: LayerProtocol?
+    public var reporter: ReporterLayer?
     
     private var ball: GRBall!
     private var phase = 1
-    
-    public var center: CGPoint {
-        
-        return CGPoint(
-            x: frame.midX / 2,
-            y: frame.midY
-        )
-    }
-    
-    override public var frame: CGRect {
-        return UIScreen.main.bounds
-    }
     
     // MARK: - Initializers
     
@@ -59,14 +42,21 @@ public class GameLayer: SKNode, SKPhysicsContactDelegate, ControlableLayer {
     }
     
     private func commonInit() {
-        ball = GRBall(color: .red, placedAt: center)
+        
+        ball = GRBall(
+            color: .red,
+            placedAt: CGPoint(
+                x: frame.midX / 2,
+                y: frame.midY
+            )
+        )
+        
         addChild(ball.node)
         createFloor()
         createObstacle()
-        textLayer?.displayTexts(ofPhase: phase)
     }
     
-    // MARK: - Control Delegate
+    // MARK: - Controlable
     
     public func onLeftButtonPressed() {
         ball.roll(.left)
@@ -88,11 +78,6 @@ public class GameLayer: SKNode, SKPhysicsContactDelegate, ControlableLayer {
         ball.jump()
     }
     
-    // MARK: - LayerProtocol methods
-    
-    public func update(_ currentTime: TimeInterval) {
-    }
-    
     // MARK: - SKPhysicsContactDelegate methods
     
     public func didBegin(_ contact: SKPhysicsContact) {
@@ -102,15 +87,16 @@ public class GameLayer: SKNode, SKPhysicsContactDelegate, ControlableLayer {
         if moduleBody.collided(with: .floor, in: contact) {
             
             ball.fall()
-            switch ball.screenSide {
             
+            switch ball.screenSide(onFrame: frame) {
+                
             case .left: break
             case .right:
-                print("chegou do lado direito")
+                
                 break
             }
         }
-        
+            
         else if moduleBody.collided(with: .obstacle, in: contact) {
             ball.fall()
         }

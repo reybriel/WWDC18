@@ -8,11 +8,6 @@
 
 import SpriteKit
 
-public protocol CategoryListener {
-    
-    func onCollision(with category: PhysicsCategory)
-}
-
 public struct PhysicsCategory {
     
     static let floor: PhysicsCategory = PhysicsCategory(bitMask: 0x1 << 0)

@@ -8,19 +8,13 @@
 
 import SpriteKit
 
-class TextLayer: SKNode, TextLayerProtocol {
+class TextLayer: ScreenSizeNode, ReporterLayer {
     
     // MARK: - LayerProtocol properties
     
     var layerNode: SKNode {
         zPosition = 15
         return self
-    }
-    
-    // MARK: - Properties
-    
-    override var frame: CGRect {
-        return UIScreen.main.bounds
     }
     
     // MARK: - Initializers
@@ -39,20 +33,9 @@ class TextLayer: SKNode, TextLayerProtocol {
         
     }
     
-    // MARK: - TextLayerProtocol methods
+    // MARK: - ReporterLayer methods
     
     public func displayTexts(ofPhase phase: Int) {
-        
-        switch phase {
-            
-        case 1:
-            textPhase1()
-            break
-        default: break
-        }
-    }
-    
-    public func displayInstruction(ofPhase phase: Int) {
         
         switch phase {
             
@@ -61,9 +44,20 @@ class TextLayer: SKNode, TextLayerProtocol {
         }
     }
     
+    public func displayInstruction(ofPhase phase: Int) {
+        
+        switch phase {
+            
+        case 1:
+            instrucition1()
+            break
+        default: break
+        }
+    }
+    
     // MARK: - Text layer methods
     
-    private func textPhase1() {
+    private func instrucition1() {
         
         let label = SKLabelNode(text: "Pass the ball to the other side")
         label.fontColor = .black

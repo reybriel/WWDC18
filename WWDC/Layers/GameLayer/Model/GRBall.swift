@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-private let moduleSize: CGSize = .init(width: 50, height: 50)
+private let ballSize: CGSize = .init(width: 50, height: 50)
 
 public class GRBall {
     
@@ -16,13 +16,6 @@ public class GRBall {
     
     private(set) var state: State = .stopped
     public let node: SKShapeNode
-    
-    public var screenSide: ScreenSide {
-        
-        return ScreenSide.side(
-            xPosition: node.position.x
-        )
-    }
     
     // MARK: - Initializers
     
@@ -34,7 +27,7 @@ public class GRBall {
         )
     }
     
-    // MARK: - Actions
+    // MARK: - Methods
     
     public func jump() {
         
@@ -89,7 +82,7 @@ public class GRBall {
         
         guard state != .jumping, state != .jumpingRolling, state != .stopping else { return }
         
-        let velocity = node.physicsBody!.dxVelocityValue
+        let velocity = node.physicsBody!.velocity.dx
         
         if velocity.absolute < 250 {
             
@@ -120,19 +113,23 @@ public class GRBall {
         state = .stopped
     }
     
+    public func screenSide(onFrame frame: CGRect) -> ScreenSide {
+        return node.position.x < frame.midX ? .left : .right
+    }
+    
     // MARK: - Static auxiliars
     
     private static func createNode(color: UIColor, placeAt point: CGPoint) -> SKShapeNode {
         
         let node = SKShapeNode(
-            ellipseOf: moduleSize
+            ellipseOf: ballSize
         )
         
         node.fillColor = color
         node.strokeColor = .black
         
         node.physicsBody = SKPhysicsBody(
-            circleOfRadius: moduleSize.width/2
+            circleOfRadius: ballSize.width/2
         )
         node.physicsBody?.allowsRotation = false
         node.physicsBody?.categoryBitMask = PhysicsCategory.module.bitMask

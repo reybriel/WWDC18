@@ -8,8 +8,6 @@
 
 import SpriteKit
 
-// MARK: - Layer protocol
-
 public protocol LayerProtocol {
     var layerNode: SKNode { get }
     func update(_ currentTime: TimeInterval)
