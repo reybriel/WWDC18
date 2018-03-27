@@ -122,6 +122,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
             switch ball.screenSide(onFrame: frame) {
                 
             case .left:
+                
                 break
                 
             case .right:

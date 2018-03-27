@@ -11,6 +11,7 @@ import SpriteKit
 public class GRFloor {
     
     public let node: SKShapeNode
+    private var obstacles: [SKShapeNode] = []
     
     public init(worldFrame: CGRect) {
         node = GRFloor.createFloorNode(inSpace: worldFrame)
@@ -37,7 +38,29 @@ public class GRFloor {
         obstacle.physicsBody?.collisionBitMask = GRPhysicsCategory.module.bitMask
         obstacle.physicsBody?.contactTestBitMask = GRPhysicsCategory.module.bitMask
         
+        obstacles.append(obstacle)
         node.addChild(obstacle)
+    }
+    
+    public func removeObstacles() {
+        
+        obstacles.forEach { obstacle in
+            
+            obstacle.run(
+                SKAction.sequence(
+                    [
+                        SKAction.moveBy(
+                            x: 0.0,
+                            y: -obstacle.frame.height,
+                            duration: 0.5
+                        ),
+                        SKAction.removeFromParent()
+                    ]
+                )
+            )
+        }
+        
+        obstacles.removeAll()
     }
     
     private static func createFloorNode(inSpace space: CGRect) -> SKShapeNode {
@@ -52,6 +75,7 @@ public class GRFloor {
         )
         
         floor.fillColor = .blue
+        floor.strokeColor = .blue
         
         floor.position = CGPoint(
             x: space.midX,
