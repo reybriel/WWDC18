@@ -34,14 +34,15 @@ public class GRObstacle {
     private lazy var showing: SKAction = SKAction.moveBy(
         x: 0.0,
         y: kObstacleHeight,
-        duration: 0.5
+        duration: 0.8
     )
     
     private lazy var hiding: SKAction = SKAction.sequence(
         [
-            SKAction.resize(
-                toHeight: 0.0,
-                duration: 0.3
+            SKAction.moveBy(
+                x: 0.0,
+                y: -kObstacleHeight,
+                duration: 0.5
             ),
             SKAction.removeFromParent()
         ]

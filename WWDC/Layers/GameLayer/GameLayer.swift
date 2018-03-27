@@ -8,10 +8,7 @@
 
 import SpriteKit
 
-public enum ScreenSide: CGFloat {
-    case right = 1.0
-    case left = -1.0
-}
+private let kFloorY: CGFloat = 75.0
 
 public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLayer {
     
@@ -47,7 +44,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         floor = GRFloor(
             frame: CGRect(
                 x: 0.0,
-                y: 75.0,
+                y: kFloorY,
                 width: frame.width,
                 height: 5.0
             )
@@ -77,7 +74,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
                 x: 0.0,
                 y: 0.0,
                 width: frame.width,
-                height: 75.0
+                height: kFloorY
             )
         )
         
