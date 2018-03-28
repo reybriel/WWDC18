@@ -129,6 +129,8 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         case 2:
             ball.run(action)
             break
+        case 3:
+            break
         default:
             break
         }
