@@ -8,13 +8,18 @@
 
 import SpriteKit
 
-private let kMessageLabelHidingOffset: CGFloat = 100.0
+private let kMessageLabelHidingOffset: CGFloat = 150.0
 
 public class GRMessageLabel: SKLabelNode {
     
     private var worldFrame = CGRect()
     private var messageCount = 0
     private var messages: [String]!
+    
+    private lazy var initialPoint = CGPoint(
+        x: worldFrame.maxX + kMessageLabelHidingOffset,
+        y: worldFrame.midY
+    )
     
     private var countMax: Int {
         return messages.count - 1
@@ -32,7 +37,7 @@ public class GRMessageLabel: SKLabelNode {
     
     private lazy var appear = SKAction.fadeIn(withDuration: 0.5)
     private lazy var disapear = SKAction.fadeOut(withDuration: 0.5)
-    private lazy var wait = SKAction.wait(forDuration: 2.0)
+    private lazy var wait = SKAction.wait(forDuration: 2.5)
     
     private lazy var iteration = {
         
@@ -47,10 +52,11 @@ public class GRMessageLabel: SKLabelNode {
         self.worldFrame = worldFrame
         
         fontColor = .black
-        position = CGPoint(
-            x: worldFrame.maxX + kMessageLabelHidingOffset,
-            y: worldFrame.midY
-        )
+        position = initialPoint
+        
+        if #available(iOS 11, *) {
+            numberOfLines = 0
+        }
         
         moveIn.timingMode = .easeInEaseOut
         moveOut.timingMode = .easeInEaseOut
@@ -105,6 +111,7 @@ public class GRMessageLabel: SKLabelNode {
             
             if lastOne {
                 self.conclusion()
+                self.position = self.initialPoint
             } else {
                 self.iteration()
             }

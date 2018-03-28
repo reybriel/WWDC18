@@ -44,9 +44,12 @@ extension GameScene: GameListener {
     }
     
     public func finishedDisplayingMessage(_ phase: Int) {
-        textLayer.showInstruction(for: gameLayer.phase)
-        controlLayer.showButtons(ofPhase: gameLayer.phase)
-        gameLayer.startPhase()
+        
+        if phase != 3 {
+            textLayer.showInstruction(for: gameLayer.phase)
+            controlLayer.showButtons(ofPhase: gameLayer.phase)
+            gameLayer.startPhase()
+        }
     }
     
     // MARK: - Auxiliars

@@ -24,14 +24,15 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
     private var leftButton: GRButton!
     private var rightButton: GRButton!
     private var upButton: GRButton!
+    private var helpButton: GRButton!
     
-    private var buttons: [GRButton] {
+    private var controlButtons: [GRButton] {
         return [leftButton, rightButton, upButton]
     }
     
     private var pressedButton: GRButton? {
         
-        return buttons.first(
+        return controlButtons.first(
             where: { $0.isPressed }
         )
     }
@@ -92,9 +93,16 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
             self.controlable?.onJumpButtonPressed()
         }
         
-        upButton.onButtonReleased = {
+        helpButton = GRButton(
+            imageNamed: "help",
+            focusedImageNamed: "help focus"
+        )
+        
+        helpButton.holdingEnabled = false
+        
+        helpButton.onButtonPressed = {
             _ in
-            self.controlable?.onJumpButtonUnpressed()
+            self.controlable?.onHelpButtonPressed()
         }
         
         layoutButtons()
@@ -122,6 +130,14 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
         )
         
         addChild(upButton)
+        
+        helpButton.position = CGPoint(
+            x: frame.width - (helpButton.frame.width/2 + 10.0),
+            y: -(helpButton.frame.height/2 + 10.0)
+        )
+        helpButton.isHidden = true
+        
+        addChild(helpButton)
     }
 }
 
@@ -168,24 +184,28 @@ public extension ControlLayer {
         switch phase {
             
         case 1:
-            buttons.forEach { $0.show() }
+            controlButtons.forEach { $0.show() }
             break
         
         case 2:
             leftButton.show()
             rightButton.show()
+            helpButton.show()
             break
         
         case 3:
+            leftButton.show()
+            rightButton.show()
             break
-        
+            
         default:
             break
         }
     }
     
     public func hideButtons() {
-        buttons.forEach { $0.hide() }
+        controlButtons.forEach { $0.hide() }
+        helpButton.hide()
     }
     
     private func trackButton(by touch: UITouch, onButtonFound: GRButtonAction, onButtonMiss: (() -> Void)?) {

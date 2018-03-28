@@ -99,14 +99,22 @@ public class GRButton: SKSpriteNode {
     
     public func show() {
         
-        enabled = true
-        run(showing)
+        if isHidden {
+            isHidden = false
+            enabled = true
+            run(showing)
+        }
     }
     
     public func hide() {
-        unpress()
-        enabled = false
-        run(hiding)
+        
+        if !isHidden {
+            unpress()
+            enabled = false
+            run(hiding) {
+                self.isHidden = true
+            }
+        }
     }
     
     private func holdingUpdate() {

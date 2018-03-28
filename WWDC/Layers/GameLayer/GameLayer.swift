@@ -91,6 +91,8 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         
         if phase != 3 {
             floor.createObstacle(atPoint: 0.48)
+        } else {
+            floor.removeObstacles()
         }
     }
     
@@ -98,13 +100,13 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         
         if triggerFlag {
             listener?.finished(phase)
+            changeScenario(phase: phase)
             phase += phase < 3 ? 1 : 0
-            moveScenario()
             triggerFlag = false
         }
     }
     
-    private func moveScenario() {
+    private func changeScenario(phase: Int) {
         
         let offset: CGFloat = -(ball.node.position.x - frame.width * 0.1)
         
@@ -116,9 +118,19 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         
         action.timingMode = .easeInEaseOut
         
-        ball.run(action)
-        floor.runOnObstacles(action) {
-            self.floor.removeObstacles()
+        switch phase {
+            
+        case 1:
+            ball.run(action)
+            floor.runOnObstacles(action) {
+                self.floor.removeObstacles()
+            }
+            break
+        case 2:
+            ball.run(action)
+            break
+        default:
+            break
         }
     }
     
@@ -146,6 +158,10 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     public func onJumpButtonPressed() {
         ball.jump()
+    }
+    
+    public func onHelpButtonPressed() {
+        triggerPhaseEnd()
     }
     
     // MARK: - Layer protocol
