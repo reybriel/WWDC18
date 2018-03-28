@@ -39,6 +39,15 @@ public class GRFloor {
         obstacles.removeAll()
     }
     
+    public func runOnObstacles(_ action: SKAction, completion: (() -> Void)? = nil) {
+        
+        obstacles.forEach { obstacle in
+            obstacle.node.run(action)
+        }
+        
+        completion?()
+    }
+    
     private static func createFloorNode(frame: CGRect) -> SKShapeNode {
         
         let floor = SKShapeNode(rectOf: frame.size)

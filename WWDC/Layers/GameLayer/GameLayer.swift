@@ -27,7 +27,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     private var floor: GRFloor!
     private var phase = 1
     
-    private var triggerFlag = false
+    private var triggerFlag = true
     
     // MARK: - Initializers
     
@@ -51,8 +51,6 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
                 height: 5.0
             )
         )
-        
-        floor.createObstacle(atPoint: 0.5)
         
         ball = GRBall(
             color: .red,
@@ -83,32 +81,49 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         magicNode.fillColor = .white
         magicNode.strokeColor = .white
         
+        
+        
         addChild(magicNode)
     }
     
     // MARK: - Methods
     
-    private func triggerPhaseStart() {
+    public func startPhase() {
+        triggerFlag = true
         
-        if !triggerFlag {
-            listener?.started(phase: phase)
-            triggerFlag = true
-        }
+        floor.createObstacle(atPoint: 0.48)
     }
     
     private func triggerPhaseEnd() {
         
         if triggerFlag {
-            listener?.finished(phase: phase)
+            listener?.finished(phase)
             phase += phase < 3 ? 1 : 0
+            moveScenario()
             triggerFlag = false
         }
     }
     
-    // MARK: - "Layer Lifecycle"
+    private func moveScenario() {
+        
+        let offset: CGFloat = -(ball.node.position.x - frame.width * 0.1)
+        
+        let action = SKAction.moveBy(
+            x: offset,
+            y: 0.0,
+            duration: 1.2
+        )
+        
+        action.timingMode = .easeInEaseOut
+        
+        ball.run(action)
+        floor.runOnObstacles(action) {
+            self.floor.removeObstacles()
+        }
+    }
     
     public func wasAdded(to scene: SKScene) {
-        listener?.started(phase: phase)
+        startPhase()
     }
     
     // MARK: - Controlable
@@ -137,15 +152,8 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     public func update(_ currentTime: TimeInterval) {
         
-        switch ball.screenSide(onFrame: frame) {
-            
-        case .left:
-            triggerPhaseStart()
-            break
-            
-        case .right:
+        if ball.hasPassed(xPoint: frame.width * 0.8) {
             triggerPhaseEnd()
-            break
         }
     }
     

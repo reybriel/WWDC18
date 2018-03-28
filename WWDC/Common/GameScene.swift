@@ -37,12 +37,9 @@ extension GameScene: GameListener {
     
     // MARK: - Game listener methods
     
-    public func started(phase: Int) {
-        textLayer.showInstruction(for: phase)
-    }
-    
-    public func finished(phase: Int) {
+    public func finished(_ phase: Int) {
         textLayer.showMessage(for: phase)
+        controlLayer.hideButtons()
     }
     
     // MARK: - Auxiliars

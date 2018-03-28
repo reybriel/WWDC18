@@ -117,6 +117,14 @@ public class GRBall {
         return node.position.x < frame.midX ? .left : .right
     }
     
+    public func hasPassed(xPoint x: CGFloat) -> Bool {
+        return node.position.x > x
+    }
+    
+    public func run(_ action: SKAction) {
+        node.run(action)
+    }
+    
     // MARK: - Static auxiliars
     
     private static func createNode(color: UIColor, placeAt point: CGPoint) -> SKShapeNode {

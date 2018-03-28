@@ -8,17 +8,19 @@
 
 import SpriteKit
 
+private let kInstructionOffset: CGFloat = 30.0
+
 public class InstructionLabel: SKLabelNode {
     
     private lazy var showing: SKAction = SKAction.moveBy(
         x: 0.0,
-        y: -50.0,
+        y: -(frame.height + kInstructionOffset),
         duration: 0.8
     )
     
     private lazy var hiding: SKAction = SKAction.moveBy(
         x: 0.0,
-        y: 50.0,
+        y: frame.height + kInstructionOffset,
         duration: 0.2
     )
     

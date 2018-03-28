@@ -17,7 +17,7 @@
 		0838F1342066888E00DD4B56 /* ControlableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0838F1332066888E00DD4B56 /* ControlableLayer.swift */; };
 		086C574D2069C9A200C0A1AC /* ScreenSizeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086C574C2069C9A200C0A1AC /* ScreenSizeNode.swift */; };
 		086D4710206968BE00645CB9 /* TextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D470F206968BE00645CB9 /* TextLayer.swift */; };
-		086D47142069744300645CB9 /* GameListenerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D47132069744300645CB9 /* GameListenerLayer.swift */; };
+		086D47142069744300645CB9 /* GameListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D47132069744300645CB9 /* GameListener.swift */; };
 		0881F2C8206177F7004C7FE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0881F2C7206177F7004C7FE5 /* AppDelegate.swift */; };
 		0881F2CE206177F7004C7FE5 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0881F2CD206177F7004C7FE5 /* GameScene.swift */; };
 		0881F2D0206177F7004C7FE5 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0881F2CF206177F7004C7FE5 /* GameViewController.swift */; };
@@ -28,6 +28,7 @@
 		0881F2EB20619B3D004C7FE5 /* GameLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0881F2EA20619B3D004C7FE5 /* GameLayer.swift */; };
 		0881F2ED20619B4F004C7FE5 /* ControlLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0881F2EC20619B4F004C7FE5 /* ControlLayer.swift */; };
 		0881F2F52061A9FE004C7FE5 /* GRButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0881F2F42061A9FE004C7FE5 /* GRButton.swift */; };
+		0884BDFD206B1B55007A8ED9 /* MessageListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0884BDFC206B1B55007A8ED9 /* MessageListener.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +42,7 @@
 		0838F1332066888E00DD4B56 /* ControlableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlableLayer.swift; sourceTree = "<group>"; };
 		086C574C2069C9A200C0A1AC /* ScreenSizeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenSizeNode.swift; sourceTree = "<group>"; };
 		086D470F206968BE00645CB9 /* TextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayer.swift; sourceTree = "<group>"; };
-		086D47132069744300645CB9 /* GameListenerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListenerLayer.swift; sourceTree = "<group>"; };
+		086D47132069744300645CB9 /* GameListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListener.swift; sourceTree = "<group>"; };
 		0881F2C4206177F7004C7FE5 /* WWDC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WWDC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0881F2C7206177F7004C7FE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0881F2CD206177F7004C7FE5 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 		0881F2EA20619B3D004C7FE5 /* GameLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLayer.swift; sourceTree = "<group>"; };
 		0881F2EC20619B4F004C7FE5 /* ControlLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlLayer.swift; sourceTree = "<group>"; };
 		0881F2F42061A9FE004C7FE5 /* GRButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRButton.swift; sourceTree = "<group>"; };
+		0884BDFC206B1B55007A8ED9 /* MessageListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListener.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,9 +89,9 @@
 			isa = PBXGroup;
 			children = (
 				086C574C2069C9A200C0A1AC /* ScreenSizeNode.swift */,
+				0833454C206AEBE40015BF81 /* ScreenSide.swift */,
 				0881F2CF206177F7004C7FE5 /* GameViewController.swift */,
 				0881F2CD206177F7004C7FE5 /* GameScene.swift */,
-				0833454C206AEBE40015BF81 /* ScreenSide.swift */,
 				086C574B2069C8DB00C0A1AC /* Extensions */,
 			);
 			path = Common;
@@ -117,24 +119,17 @@
 			isa = PBXGroup;
 			children = (
 				0881F2EA20619B3D004C7FE5 /* GameLayer.swift */,
-				086C57522069CB2200C0A1AC /* Protocols */,
+				0884BDFA206B1A68007A8ED9 /* Protocols */,
 				086C57542069CB6500C0A1AC /* Model */,
 			);
 			path = GameLayer;
-			sourceTree = "<group>";
-		};
-		086C57522069CB2200C0A1AC /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				086D47132069744300645CB9 /* GameListenerLayer.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		086C57532069CB3100C0A1AC /* TextLayer */ = {
 			isa = PBXGroup;
 			children = (
 				086D470F206968BE00645CB9 /* TextLayer.swift */,
+				0884BDFB206B1B38007A8ED9 /* Protocols */,
 				08334545206ABA480015BF81 /* Model */,
 			);
 			path = TextLayer;
@@ -214,6 +209,22 @@
 				0881F2D9206177F7004C7FE5 /* Info.plist */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		0884BDFA206B1A68007A8ED9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				086D47132069744300645CB9 /* GameListener.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0884BDFB206B1B38007A8ED9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0884BDFC206B1B55007A8ED9 /* MessageListener.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,6 +307,7 @@
 				08334547206ABA550015BF81 /* InstructionLabel.swift in Sources */,
 				0833454D206AEBE40015BF81 /* ScreenSide.swift in Sources */,
 				0881F2E5206186E3004C7FE5 /* GRBall.swift in Sources */,
+				0884BDFD206B1B55007A8ED9 /* MessageListener.swift in Sources */,
 				0838F13020667A9300DD4B56 /* CGFloat+Extension.swift in Sources */,
 				0838F1322066878100DD4B56 /* LayerProtocol.swift in Sources */,
 				0881F2ED20619B4F004C7FE5 /* ControlLayer.swift in Sources */,
@@ -305,7 +317,7 @@
 				0881F2D0206177F7004C7FE5 /* GameViewController.swift in Sources */,
 				0881F2C8206177F7004C7FE5 /* AppDelegate.swift in Sources */,
 				08334549206AC7070015BF81 /* GRObstacle.swift in Sources */,
-				086D47142069744300645CB9 /* GameListenerLayer.swift in Sources */,
+				086D47142069744300645CB9 /* GameListener.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

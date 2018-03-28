@@ -102,42 +102,24 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
     
     private func layoutButtons() {
         
-        leftButton.constraints = [
-            SKConstraint.positionX(
-                SKRange(
-                    constantValue: leftButton.size.width/2 + 10
-                ),
-                y: SKRange(
-                    constantValue: leftButton.size.height/2 + 10
-                )
-            )
-        ]
+        leftButton.position = CGPoint(
+            x: leftButton.frame.width/2 + 10.0,
+            y: leftButton.frame.height/2 + 10.0
+        )
         
         addChild(leftButton)
         
-        frontButton.constraints = [
-            SKConstraint.positionX(
-                SKRange(
-                    constantValue: leftButton.size.width + frontButton.size.width/2 + 20
-                ),
-                y: SKRange(
-                    constantValue: frontButton.size.height/2 + 10
-                )
-            )
-        ]
+        frontButton.position = CGPoint(
+            x: leftButton.frame.maxX + frontButton.frame.width/2 + 10.0,
+            y: frontButton.frame.height/2 + 10.0
+        )
         
         addChild(frontButton)
         
-        upButton.constraints = [
-            SKConstraint.positionX(
-                SKRange(
-                    constantValue: frame.size.width - upButton.size.width/2 - 10
-                ),
-                y: SKRange(
-                    constantValue: upButton.size.height/2 + 10
-                )
-            )
-        ]
+        upButton.position = CGPoint(
+            x: frame.width - (upButton.frame.width/2 + 10.0),
+            y: upButton.frame.height/2 + 10.0
+        )
         
         addChild(upButton)
     }
@@ -180,6 +162,21 @@ public extension ControlLayer {
     }
     
     // MARK: - Control layer methods
+    
+    public func hideButtons() {
+        
+        let hiding = SKAction.moveBy(
+            x: 0.0,
+            y: -80.0,
+            duration: 0.8
+        )
+        
+        buttons.forEach { (button) in
+            button.unpress()
+            button.enabled = false
+            button.run(hiding)
+        }
+    }
     
     private func trackButton(by touch: UITouch, onButtonFound: GRButtonAction, onButtonMiss: (() -> Void)?) {
         
