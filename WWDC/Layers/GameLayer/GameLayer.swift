@@ -170,7 +170,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     public func update(_ currentTime: TimeInterval) {
         
-        if ball.hasPassed(xPoint: frame.width * 0.8) {
+        if ball.hasPassed(xPoint: frame.width * 0.65) {
             triggerPhaseEnd()
         }
     }

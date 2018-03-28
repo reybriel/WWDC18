@@ -80,7 +80,7 @@ public class GRBall {
     
     public func roll(_ direction: ScreenSide) {
         
-        guard state != .jumping, state != .jumpingRolling, state != .stopping else { return }
+        guard /* state != .jumping, */ state != .jumpingRolling, state != .stopping else { return }
         
         let velocity = node.physicsBody!.velocity.dx
         

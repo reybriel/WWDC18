@@ -190,7 +190,7 @@ public extension ControlLayer {
         case 2:
             leftButton.show()
             rightButton.show()
-            Timer.scheduledTimer(withTimeInterval: 6.0, repeats: false) {
+            Timer.scheduledTimer(withTimeInterval: 8.5, repeats: false) {
                 _ in
                 self.helpButton.show()
             }
