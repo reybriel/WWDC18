@@ -10,6 +10,8 @@ import SpriteKit
 
 public typealias GRButtonAction = (_ button: GRButton) -> Void
 
+private let kButtonAreaHeight: CGFloat = 80.0
+
 public class GRButton: SKSpriteNode {
     
     // MARK: - GRButton Properties
@@ -34,6 +36,18 @@ public class GRButton: SKSpriteNode {
     public var enabled: Bool = true
     
     private var holdingTimer: Timer? = nil
+    
+    private lazy var showing = SKAction.moveBy(
+        x: 0.0,
+        y: kButtonAreaHeight,
+        duration: 0.8
+    )
+    
+    private lazy var hiding = SKAction.moveBy(
+        x: 0.0,
+        y: -kButtonAreaHeight,
+        duration: 0.8
+    )
     
     // MARK: - Event handlers
     
@@ -81,6 +95,18 @@ public class GRButton: SKSpriteNode {
             self.onButtonReleased?(self)
             isPressed = false
         }
+    }
+    
+    public func show() {
+        
+        enabled = true
+        run(showing)
+    }
+    
+    public func hide() {
+        unpress()
+        enabled = false
+        run(hiding)
     }
     
     private func holdingUpdate() {

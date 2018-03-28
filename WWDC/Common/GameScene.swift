@@ -45,7 +45,7 @@ extension GameScene: GameListener {
     
     public func finishedDisplayingMessage(_ phase: Int) {
         textLayer.showInstruction(for: gameLayer.phase)
-        //show control button
+        controlLayer.showButtons(ofPhase: gameLayer.phase)
         gameLayer.startPhase()
     }
     

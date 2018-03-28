@@ -22,11 +22,11 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
     public var controlable: ControlableLayer?
     
     private var leftButton: GRButton!
-    private var frontButton: GRButton!
+    private var rightButton: GRButton!
     private var upButton: GRButton!
     
     private var buttons: [GRButton] {
-        return [leftButton, frontButton, upButton]
+        return [leftButton, rightButton, upButton]
     }
     
     private var pressedButton: GRButton? {
@@ -65,17 +65,17 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
             self.controlable?.onLeftButtonUnpressed()
         }
         
-        frontButton = GRButton(
+        rightButton = GRButton(
             imageNamed: "right",
             focusedImageNamed: "right focus"
         )
         
-        frontButton.onButtonPressed = {
+        rightButton.onButtonPressed = {
             _ in
             self.controlable?.onRightButtonPressed()
         }
         
-        frontButton.onButtonReleased = {
+        rightButton.onButtonReleased = {
             _ in
             self.controlable?.onRightButtonUnpressed()
         }
@@ -109,12 +109,12 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
         
         addChild(leftButton)
         
-        frontButton.position = CGPoint(
-            x: leftButton.frame.maxX + frontButton.frame.width/2 + 10.0,
-            y: frontButton.frame.height/2 + 10.0
+        rightButton.position = CGPoint(
+            x: leftButton.frame.maxX + rightButton.frame.width/2 + 10.0,
+            y: rightButton.frame.height/2 + 10.0
         )
         
-        addChild(frontButton)
+        addChild(rightButton)
         
         upButton.position = CGPoint(
             x: frame.width - (upButton.frame.width/2 + 10.0),
@@ -163,19 +163,29 @@ public extension ControlLayer {
     
     // MARK: - Control layer methods
     
-    public func hideButtons() {
+    public func showButtons(ofPhase phase: Int) {
         
-        let hiding = SKAction.moveBy(
-            x: 0.0,
-            y: -80.0,
-            duration: 0.8
-        )
+        switch phase {
+            
+        case 1:
+            buttons.forEach { $0.show() }
+            break
         
-        buttons.forEach { (button) in
-            button.unpress()
-            button.enabled = false
-            button.run(hiding)
+        case 2:
+            leftButton.show()
+            rightButton.show()
+            break
+        
+        case 3:
+            break
+        
+        default:
+            break
         }
+    }
+    
+    public func hideButtons() {
+        buttons.forEach { $0.hide() }
     }
     
     private func trackButton(by touch: UITouch, onButtonFound: GRButtonAction, onButtonMiss: (() -> Void)?) {
