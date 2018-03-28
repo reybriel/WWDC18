@@ -34,7 +34,7 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
         ["This teaches us an important lesson...", "Addapting for the ones who need is not a fad,\nis a necessity!", "Be inclusive"]
     ]
     
-    public var listener: MessageListener?
+    public var listener: GameListener?
     
     // MARK: - Initializers
     
@@ -64,7 +64,7 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
     
     // MARK: - Methods
     
-    private func showInstruction(for phase: Int) {
+    public func showInstruction(for phase: Int) {
         
         instructionLabel.text = instructions[phase - 1]
         instructionLabel.show()

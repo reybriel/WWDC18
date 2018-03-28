@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-private let kMessageLabelHidingOffset: CGFloat = 50.0
+private let kMessageLabelHidingOffset: CGFloat = 100.0
 
 public class GRMessageLabel: SKLabelNode {
     
@@ -54,7 +54,6 @@ public class GRMessageLabel: SKLabelNode {
         
         moveIn.timingMode = .easeInEaseOut
         moveOut.timingMode = .easeInEaseOut
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {

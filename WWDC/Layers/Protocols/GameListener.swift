@@ -10,8 +10,10 @@ import Foundation
 
 public protocol GameListener {
     func finished(_ phase: Int)
+    func finishedDisplayingMessage(_ phase: Int)
 }
 
 public extension GameListener {
     public func finished(_ phase: Int) {}
+    public func finishedDisplayingMessage(_ phase: Int) {}
 }

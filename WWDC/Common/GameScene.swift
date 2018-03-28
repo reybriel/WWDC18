@@ -27,6 +27,7 @@ public class GameScene: SKScene {
         physicsWorld.contactDelegate = gameLayer
         
         gameLayer.listener = self
+        textLayer.listener = self
         controlLayer.controlable = gameLayer
         
         addLayers(layers: layers)
@@ -40,6 +41,12 @@ extension GameScene: GameListener {
     public func finished(_ phase: Int) {
         textLayer.showMessage(for: phase)
         controlLayer.hideButtons()
+    }
+    
+    public func finishedDisplayingMessage(_ phase: Int) {
+        textLayer.showInstruction(for: gameLayer.phase)
+        //show control button
+        gameLayer.startPhase()
     }
     
     // MARK: - Auxiliars

@@ -25,7 +25,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     private var ball: GRBall!
     private var floor: GRFloor!
-    private var phase = 1
+    private(set) var phase = 1
     
     private var triggerFlag = true
     
@@ -81,8 +81,6 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         magicNode.fillColor = .white
         magicNode.strokeColor = .white
         
-        
-        
         addChild(magicNode)
     }
     
@@ -91,7 +89,9 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     public func startPhase() {
         triggerFlag = true
         
-        floor.createObstacle(atPoint: 0.48)
+        if phase != 3 {
+            floor.createObstacle(atPoint: 0.48)
+        }
     }
     
     private func triggerPhaseEnd() {
