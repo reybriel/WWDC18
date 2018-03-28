@@ -19,7 +19,8 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
     
     // MARK: - Properties
     
-    private let instructionLabel = InstructionLabel()
+    private let instructionLabel = GRInstructionLabel()
+    private lazy var messageLabel = GRMessageLabel(worldFrame: frame)
     
     private let instructions = [
         "Pass the ball to the other side",
@@ -54,6 +55,7 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
                 y: frame.height + instructionLabel.frame.height + 10.0
         )
         addChild(instructionLabel)
+        addChild(messageLabel)
     }
     
     func wasAdded(to scene: SKScene) {
@@ -75,29 +77,8 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
     public func showMessage(for phase: Int) {
         hideInstruction()
         
-        let label = SKLabelNode(text: messages[phase - 1][0])
-        
-        label.fontColor = .black
-        label.position = CGPoint(
-            x: frame.maxX + label.frame.width/2,
-            y: frame.midY
-        )
-        
-        let action = SKAction.sequence(
-            [
-                SKAction.moveTo(
-                    x: frame.midX,
-                    duration: 1.2
-                ),
-                SKAction.wait(forDuration: 2.0)
-            ]
-        )
-        
-        action.timingMode = .easeOut
-        
-        addChild(label)
-        
-        label.run(action) {
+        messageLabel.deliver(messages: messages[phase - 1]) {
+            
             self.listener?.finishedDisplayingMessage(phase)
         }
     }

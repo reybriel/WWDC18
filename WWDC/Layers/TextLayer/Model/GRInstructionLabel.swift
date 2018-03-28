@@ -10,7 +10,7 @@ import SpriteKit
 
 private let kInstructionOffset: CGFloat = 30.0
 
-public class InstructionLabel: SKLabelNode {
+public class GRInstructionLabel: SKLabelNode {
     
     private lazy var showing: SKAction = SKAction.moveBy(
         x: 0.0,
