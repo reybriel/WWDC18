@@ -10,49 +10,88 @@ import SpriteKit
 
 private let kMessageLabelHidingOffset: CGFloat = 150.0
 
+public typealias Block = () -> Void
+
 public class GRMessageLabel: SKLabelNode {
     
-    private var worldFrame = CGRect()
-    private var messageCount = 0
+    private var worldFrame: CGRect
+    private var currentMessage = 1
     private var messages: [String]!
+    private var finishedMessaging = false
     
-    private lazy var initialPoint = CGPoint(
+    private lazy var initialPosition = CGPoint(
         x: worldFrame.maxX + kMessageLabelHidingOffset,
-        y: worldFrame.midY
+        y: worldFrame.midY + 60.0
     )
     
-    private var countMax: Int {
-        return messages.count - 1
-    }
-    
-    private lazy var moveIn = SKAction.moveTo(
+    private lazy var moveIn  = SKAction.moveTo(
         x: worldFrame.midX,
         duration: 1.2
     )
     
-    private lazy var moveOut = SKAction.moveTo(
+    private var moveOut = SKAction.moveTo(
         x: -kMessageLabelHidingOffset,
         duration: 1.2
     )
     
-    private lazy var appear = SKAction.fadeIn(withDuration: 0.5)
-    private lazy var disapear = SKAction.fadeOut(withDuration: 0.5)
-    private lazy var wait = SKAction.wait(forDuration: 2.5)
+    private var appear   = SKAction.fadeIn (withDuration: 0.5)
+    private var disapear = SKAction.fadeOut(withDuration: 0.5)
     
-    private lazy var iteration = {
+    private var wait     = SKAction.wait   ( forDuration: 2.5)
+    
+    private var messageSequence: SKAction {
         
-        self.display(message: self.messages[self.messageCount], lastOne: self.messageCount == self.countMax)
+        if atFirstMessage {
+            
+            return SKAction.sequence(
+                [moveIn, wait, disapear]
+            )
+        }
+            
+        else {
+            
+            return SKAction.sequence(
+                [appear, wait, disapear]
+            )
+        }
     }
     
-    private var conclusion: (() -> Void)!
+    private lazy var forEachMessage = {
+        
+        self.nextMessage()
+        
+        if self.finishedMessaging {
+            self.onLastMessageConclusion()
+            self.restore()
+        }
+        
+        else {
+            self.display(message: self.messages[self.currentIndex])
+        }
+    }
     
-    init(worldFrame: CGRect) {
-        super.init()
+    private var onLastMessageConclusion: Block!
+    
+    private var currentIndex: Int {
+        return currentMessage - 1
+    }
+    
+    public var atFirstMessage: Bool {
+        return currentMessage == 1
+    }
+    
+    public var atLastMessage: Bool {
+        return currentMessage == messages.count
+    }
+    
+    public init(worldFrame: CGRect) {
         
         self.worldFrame = worldFrame
         
+        super.init()
+        
         fontColor = .black
-        position = initialPoint
+        position = initialPosition
         
         if #available(iOS 11, *) {
             numberOfLines = 0
@@ -63,59 +102,43 @@ public class GRMessageLabel: SKLabelNode {
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        
+        self.worldFrame = aDecoder.decodeCGRect(forKey: "frame")
+        
         super.init(coder: aDecoder)
     }
     
-    public func deliver(messages: [String], completion: @escaping () -> Void) {
-        self.messages = messages
-        self.messageCount = 0
-        self.conclusion = completion
-        
-        display(message: messages[messageCount], lastOne: messageCount == countMax)
+    private func startCounting() {
+        currentMessage = 1
+        finishedMessaging = false
     }
     
-    private func display(message: String, lastOne: Bool) {
-        
-        var sequence: SKAction = SKAction()
-        
-        if messageCount == 0 {
-            
-            if lastOne {
-                
-                sequence = SKAction.sequence(
-                    [moveIn, wait, moveOut]
-                )
-            } else {
-                
-                sequence = SKAction.sequence(
-                    [moveIn, wait, disapear]
-                )
-            }
-            
-        } else if lastOne {
-            
-            sequence = SKAction.sequence(
-                [appear, wait, moveOut]
-            )
-            
-        } else {
-            
-            sequence = SKAction.sequence(
-                [appear, wait, disapear]
-            )
-        }
+    private func nextMessage() {
+        currentMessage += 1
+        finishedMessaging = currentMessage > messages.count
+    }
+    
+    private func restore() {
+        position = initialPosition
+        alpha = 1.0
+    }
+    
+    private func display(message: String) {
         
         text = message
-        run(sequence) {
-            self.messageCount += 1
-            
-            if lastOne {
-                self.conclusion()
-                self.position = self.initialPoint
-            } else {
-                self.iteration()
-            }
+        
+        print(message)
+        run(messageSequence) {
+            self.forEachMessage()
         }
+    }
+    
+    public func deliver(messages: [String], completion: @escaping Block) {
+        self.messages = messages
+        startCounting()
+        onLastMessageConclusion = completion
+        
+        display(message: messages[currentIndex])
     }
     
     deinit {
