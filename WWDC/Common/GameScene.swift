@@ -38,17 +38,26 @@ extension GameScene: GameListener {
     
     // MARK: - Game listener methods
     
+    public func willStart(_ phase: Int) {
+        textLayer.showInstruction(for: phase)
+        controlLayer.presentButtons(ofPhase: phase)
+    }
+    
     public func finished(_ phase: Int) {
         textLayer.showMessage(for: phase)
         controlLayer.hideButtons()
     }
     
+    public func willStartDisplayingMessage(_ phase: Int) {
+        
+    }
+    
     public func finishedDisplayingMessage(_ phase: Int) {
         
         if phase != 3 {
-            textLayer.showInstruction(for: gameLayer.phase)
-            controlLayer.showButtons(ofPhase: gameLayer.phase)
             gameLayer.startPhase()
+        } else {
+            controlLayer.presentReplay()
         }
     }
     

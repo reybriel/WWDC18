@@ -179,7 +179,7 @@ public extension ControlLayer {
     
     // MARK: - Control layer methods
     
-    public func showButtons(ofPhase phase: Int) {
+    public func presentButtons(ofPhase phase: Int) {
         
         switch phase {
             
@@ -209,6 +209,30 @@ public extension ControlLayer {
     public func hideButtons() {
         controlButtons.forEach { $0.hide() }
         helpButton.hide()
+    }
+    
+    public func presentReplay() {
+        
+        let replayButton = GRButton(
+            imageNamed: "replay",
+            focusedImageNamed: "replay focus"
+        )
+        
+        replayButton.position = CGPoint(
+            x: frame.midX,
+            y: frame.midY + 60.0
+        )
+        
+        replayButton.holdingEnabled = false
+        
+        replayButton.onButtonPressed = {
+            _ in
+            self.controlable?.onReplayButtonPressed()
+            replayButton.disappear()
+        }
+        replayButton.alpha = 0.0
+        addChild(replayButton)
+        replayButton.appear()
     }
     
     private func trackButton(by touch: UITouch, onButtonFound: GRButtonAction, onButtonMiss: (() -> Void)?) {

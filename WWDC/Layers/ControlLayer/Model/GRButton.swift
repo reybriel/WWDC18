@@ -49,6 +49,9 @@ public class GRButton: SKSpriteNode {
         duration: 0.8
     )
     
+    private lazy var appearing = SKAction.fadeIn(withDuration: 0.5)
+    private lazy var disappearing = SKAction.fadeOut(withDuration: 0.5)
+    
     // MARK: - Event handlers
     
     public var onButtonPressed: GRButtonAction?
@@ -101,7 +104,7 @@ public class GRButton: SKSpriteNode {
         
         if isHidden {
             isHidden = false
-            enabled = true
+            unpress()
             run(showing)
         }
     }
@@ -110,10 +113,22 @@ public class GRButton: SKSpriteNode {
         
         if !isHidden {
             unpress()
-            enabled = false
             run(hiding) {
                 self.isHidden = true
             }
+        }
+    }
+    
+    public func appear() {
+        
+        run(appearing)
+    }
+    
+    public func disappear() {
+        
+        unpress()
+        run(disappearing) {
+            self.removeFromParent()
         }
     }
     

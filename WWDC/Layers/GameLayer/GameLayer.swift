@@ -60,8 +60,8 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
             )
         )
         
-        addChild(floor.node)
         addChild(ball.node)
+        addChild(floor.node)
         magicBox()
     }
     
@@ -89,11 +89,19 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     public func startPhase() {
         triggerFlag = true
         
+        listener?.willStart(phase)
+        
         if phase != 3 {
-            floor.createObstacle(atPoint: 0.48)
+            floor.createObstacle(atPoint: 0.49)
         } else {
             floor.removeObstacles()
         }
+    }
+    
+    private func startGame() {
+        
+        phase = 1
+        startPhase()
     }
     
     private func triggerPhaseEnd() {
@@ -130,6 +138,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
             ball.run(action)
             break
         case 3:
+            ball.run(action)
             break
         default:
             break
@@ -137,7 +146,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     }
     
     public func wasAdded(to scene: SKScene) {
-        startPhase()
+        startGame()
     }
     
     // MARK: - Controlable
@@ -164,6 +173,10 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     public func onHelpButtonPressed() {
         triggerPhaseEnd()
+    }
+    
+    public func onReplayButtonPressed() {
+        startGame()
     }
     
     // MARK: - Layer protocol

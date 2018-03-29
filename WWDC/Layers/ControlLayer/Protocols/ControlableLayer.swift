@@ -16,6 +16,7 @@ public protocol ControlableLayer: LayerProtocol {
     func onRightButtonUnpressed()
     func onJumpButtonPressed()
     func onHelpButtonPressed()
+    func onReplayButtonPressed()
 }
 
 public extension ControlableLayer {
@@ -26,4 +27,5 @@ public extension ControlableLayer {
     public func onRightButtonUnpressed() {}
     public func onJumpButtonPressed() {}
     public func onHelpButtonPressed() {}
+    public func onReplayButtonPressed() {}
 }

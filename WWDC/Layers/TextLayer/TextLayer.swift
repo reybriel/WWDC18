@@ -59,7 +59,7 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
     }
     
     func wasAdded(to scene: SKScene) {
-        showInstruction(for: 1)
+        
     }
     
     // MARK: - Methods
