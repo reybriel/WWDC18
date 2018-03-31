@@ -12,7 +12,7 @@ private let kFloorY: CGFloat = 75.0
 
 public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLayer {
     
-    // MARK: - LayerProtocol properties
+    // MARK: - Layer protocol properties
     
     public var layerNode: SKNode {
         zPosition = 10
@@ -21,13 +21,18 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     // MARK: - Properties
     
+    ///The listener of the game.
     public var listener: GameListener?
     
+    ///The ball.
     private var ball: GRBall!
+    ///The floor.
     private var floor: GRFloor!
+    ///The current phase.
     private(set) var phase = 1
     
-    private var triggerFlag = true
+    ///A flag tha indicates if the end of phase can be triggered.
+    private var canTriggerPhaseEnd = true
     
     // MARK: - Initializers
     
@@ -41,6 +46,7 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         commonInit()
     }
     
+    ///A common initialization for the layer.
     private func commonInit() {
         
         floor = GRFloor(
@@ -67,6 +73,11 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     // MARK: - Tricks
     
+    /**
+     This "magic box" is a whtie node that is placed under the floor.
+     The goal of this node is to create the impression that the
+     obstacles are rising from the floor.
+     */
     private func magicBox() {
         
         let magicNode = SKShapeNode(
@@ -86,8 +97,9 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     // MARK: - Methods
     
+    ///Starts a new phase.
     public func startPhase() {
-        triggerFlag = true
+        canTriggerPhaseEnd = true
         
         listener?.willStart(phase)
         
@@ -98,22 +110,29 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         }
     }
     
+    ///Starts the game from phase one.
     private func startGame() {
         
         phase = 1
         startPhase()
     }
     
+    ///Triggers the end of a phase.
     private func triggerPhaseEnd() {
         
-        if triggerFlag {
+        if canTriggerPhaseEnd {
             listener?.finished(phase)
             changeScenario(phase: phase)
             phase += phase < 3 ? 1 : 0
-            triggerFlag = false
+            canTriggerPhaseEnd = false
         }
     }
     
+    /**
+     Positions the nodes of the game for the start of a new phase.
+     
+     - parameter phase: The phase that is ending.
+     */
     private func changeScenario(phase: Int) {
         
         let offset: CGFloat = -(ball.node.position.x - frame.width * 0.1)
@@ -145,11 +164,13 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
         }
     }
     
+    // MARK: - Layer protocol methods
+    
     public func wasAdded(to scene: SKScene) {
         startGame()
     }
     
-    // MARK: - Controlable
+    // MARK: - Controlable layer methods
     
     public func onLeftButtonPressed() {
         ball.roll(.left)
@@ -190,9 +211,10 @@ public class GameLayer: ScreenSizeNode, SKPhysicsContactDelegate, ControlableLay
     
     // MARK: - SKPhysicsContactDelegate methods
     
+    ///:nodoc:
     public func didBegin(_ contact: SKPhysicsContact) {
         
-        let moduleBody = GRPhysicsCategory.module
+        let moduleBody = GRPhysicsCategory.ball
         
         if moduleBody.collided(with: .floor, in: contact) || moduleBody.collided(with: .obstacle, in: contact) {
             ball.fall()

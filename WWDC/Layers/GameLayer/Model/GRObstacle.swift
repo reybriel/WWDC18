@@ -11,10 +11,17 @@ import SpriteKit
 private let kObstacleHeight: CGFloat = 100.0
 private let kObstacleWidth : CGFloat =  15.0
 
+private let showing = SKAction.moveBy(x: 0.0, y: kObstacleHeight, duration: 0.8)
+private let hiding  = SKAction.sequence([SKAction.moveBy(x: 0.0, y: -kObstacleHeight, duration: 0.5), SKAction.removeFromParent()])
+
 public class GRObstacle {
     
+    // MARK: - Porperties
+    
+    ///The node of the obstacle.
     public let node: SKShapeNode
     
+    ///The position of the obstacle.
     public var position: CGPoint {
         
         get {
@@ -26,27 +33,13 @@ public class GRObstacle {
         }
     }
     
+    ///The frame of the obstacle.
     public var frame: CGRect {
         
         return node.frame
     }
     
-    private lazy var showing: SKAction = SKAction.moveBy(
-        x: 0.0,
-        y: kObstacleHeight,
-        duration: 0.8
-    )
-    
-    private lazy var hiding: SKAction = SKAction.sequence(
-        [
-            SKAction.moveBy(
-                x: 0.0,
-                y: -kObstacleHeight,
-                duration: 0.5
-            ),
-            SKAction.removeFromParent()
-        ]
-    )
+    // MARK: - Initializers
     
     init(forShowing: Bool = true) {
         
@@ -64,14 +57,19 @@ public class GRObstacle {
         setupPhysicsBody()
     }
     
+    // MARK: - Methods
+    
+    ///Shows the obstacle by making it comes up from bellow the floor.
     public func show() {
         node.run(showing)
     }
     
+    ///Hides the obstacle by miking it comes down to bellow the floor.
     public func hide() {
         node.run(hiding)
     }
     
+    ///Setups the obstacle physics body.
     private func setupPhysicsBody() {
         
         node.physicsBody = SKPhysicsBody(
@@ -86,7 +84,7 @@ public class GRObstacle {
         node.physicsBody?.isDynamic = false
         
         node.physicsBody?.categoryBitMask = GRPhysicsCategory.obstacle.bitMask
-        node.physicsBody?.collisionBitMask = GRPhysicsCategory.module.bitMask
-        node.physicsBody?.contactTestBitMask = GRPhysicsCategory.module.bitMask
+        node.physicsBody?.collisionBitMask = GRPhysicsCategory.ball.bitMask
+        node.physicsBody?.contactTestBitMask = GRPhysicsCategory.ball.bitMask
     }
 }

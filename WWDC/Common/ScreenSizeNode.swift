@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+/**
+ 
+ A node that has the size of the screen.
+ */
 public class ScreenSizeNode: SKNode {
     
     override public var frame: CGRect {

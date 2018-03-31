@@ -19,17 +19,25 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
     
     // MARK: - Properties
     
+    ///The layer that is being controlled by this control layer.
     public var controlable: ControlableLayer?
     
+    ///Left button.
     private var leftButton: GRButton!
+    ///Right button.
     private var rightButton: GRButton!
+    ///Up button.
     private var upButton: GRButton!
-    private var helpButton: GRButton!
     
+    ///Control buttons.
     private var controlButtons: [GRButton] {
         return [leftButton, rightButton, upButton]
     }
     
+    ///Help button.
+    private var helpButton: GRButton!
+    
+    ///The button that is being pressed.
     private var pressedButton: GRButton? {
         
         return controlButtons.first(
@@ -39,16 +47,19 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
     
     // MARK: - Initializers
     
+    ///:nodoc:
     override public init() {
         super.init()
         commonInit()
     }
     
+    ///:nodoc:
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
     
+    ///A common initialization for the layer.
     private func commonInit() {
         
         leftButton = GRButton(
@@ -108,6 +119,7 @@ public class ControlLayer: ScreenSizeNode, LayerProtocol {
         layoutButtons()
     }
     
+    ///Organize the button in the right positions.
     private func layoutButtons() {
         
         leftButton.position = CGPoint(
@@ -145,6 +157,7 @@ public extension ControlLayer {
     
     // MARK: - Touches
     
+    ///:nodoc:
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         trackButton(
             by: touches.first!,
@@ -153,6 +166,7 @@ public extension ControlLayer {
         )
     }
     
+    ///:nodoc:
     override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         trackButton(
             by: touches.first!,
@@ -161,6 +175,7 @@ public extension ControlLayer {
         )
     }
     
+    ///:nodoc:
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         trackButton(
             by: touches.first!,
@@ -169,6 +184,7 @@ public extension ControlLayer {
         )
     }
     
+    ///:nodoc:
     override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         trackButton(
             by: touches.first!,
@@ -179,6 +195,11 @@ public extension ControlLayer {
     
     // MARK: - Control layer methods
     
+    /**
+     Presents the buttons that are required for a given phase.
+     
+     - parameter phase: The phase that requires the buttons.
+     */
     public func presentButtons(ofPhase phase: Int) {
         
         switch phase {
@@ -190,10 +211,7 @@ public extension ControlLayer {
         case 2:
             leftButton.show()
             rightButton.show()
-            Timer.scheduledTimer(withTimeInterval: 8.5, repeats: false) {
-                _ in
-                self.helpButton.show()
-            }
+            Timer.scheduledTimer(withTimeInterval: 8.5, repeats: false) { _ in self.helpButton.show() }
             break
         
         case 3:
@@ -201,16 +219,17 @@ public extension ControlLayer {
             rightButton.show()
             break
             
-        default:
-            break
+        default: break
         }
     }
     
+    ///Hides all the buttons of the layer.
     public func hideButtons() {
         controlButtons.forEach { $0.hide() }
         helpButton.hide()
     }
     
+    ///Presents the replay button by the end of the game.
     public func presentReplay() {
         
         let replayButton = GRButton(
@@ -235,6 +254,13 @@ public extension ControlLayer {
         replayButton.appear()
     }
     
+    /**
+     Tracks a button with a given touch.
+     
+     - parameter touch: The touch used to track the button.
+     - parameter onButtonFound: A block of code to be executed in case a button is found.
+     - parameter onButtonMiss: A block of code to be executed in case no button is found.
+     */
     private func trackButton(by touch: UITouch, onButtonFound: GRButtonAction, onButtonMiss: (() -> Void)?) {
         
         let location = touch.location(in: self)

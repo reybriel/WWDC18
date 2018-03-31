@@ -8,21 +8,14 @@
 
 import SpriteKit
 
-private let kInstructionOffset: CGFloat = 30.0
+private let showing = SKAction.moveBy(x: 0.0, y: -kInstructionAnimationOffset, duration: 0.8)
+private let hiding  = SKAction.moveBy(x: 0.0, y:  kInstructionAnimationOffset, duration: 0.2)
+
+private let kInstructionAnimationOffset: CGFloat = 60.0
 
 public class GRInstructionLabel: SKLabelNode {
     
-    private lazy var showing: SKAction = SKAction.moveBy(
-        x: 0.0,
-        y: -(frame.height + kInstructionOffset),
-        duration: 0.8
-    )
-    
-    private lazy var hiding: SKAction = SKAction.moveBy(
-        x: 0.0,
-        y: frame.height + kInstructionOffset,
-        duration: 0.2
-    )
+    // MARK: - Initializers
     
     public override init() {
         super.init()
@@ -34,15 +27,22 @@ public class GRInstructionLabel: SKLabelNode {
         commonInit()
     }
     
+    ///A common init to the label.
     private func commonInit() {
         fontColor = .black
     }
     
+    ///Shows the label.
     public func show() {
         run(showing)
     }
     
+    ///Hides the label.
     public func hide() {
         run(hiding)
+    }
+    
+    deinit {
+        removeFromParent()
     }
 }

@@ -8,6 +8,18 @@
 
 import SpriteKit
 
+private let instructions = [
+    "Pass the ball to the other side",
+    "What if you couldn't jump anymore?",
+    "Try now!"
+]
+
+private let messages = [
+    ["Pretty easy, isn`t it?", "But..."],
+    ["It gets hard, doesn't it?", "Let me help you!"],
+    ["This teaches us an important lesson...", "Addapting for the ones who need is not a fad,\nis a necessity!", "Be inclusive"]
+]
+
 class TextLayer: ScreenSizeNode, LayerProtocol {
     
     // MARK: - LayerProtocol properties
@@ -19,21 +31,12 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
     
     // MARK: - Properties
     
+    ///The label that appears when the phase is being played.
     private let instructionLabel = GRInstructionLabel()
+    ///The label that shows the message when a phase is ended.
     private lazy var messageLabel = GRMessageLabel(worldFrame: frame)
     
-    private let instructions = [
-        "Pass the ball to the other side",
-        "What if you couldn't jump anymore?",
-        "Try now!"
-    ]
-    
-    private let messages = [
-        ["Pretty easy, isn`t it?", "But..."],
-        ["It gets hard, doesn't it?", "Let me help you!"],
-        ["This teaches us an important lesson...", "Addapting for the ones who need is not a fad,\nis a necessity!", "Be inclusive"]
-    ]
-    
+    ///The listener of the game.
     public var listener: GameListener?
     
     // MARK: - Initializers
@@ -48,6 +51,7 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
         commonInit()
     }
 
+    /// A common initializer for the layer.
     private func commonInit() {
         instructionLabel.fontColor = .black
         instructionLabel.position = CGPoint(
@@ -58,26 +62,33 @@ class TextLayer: ScreenSizeNode, LayerProtocol {
         addChild(messageLabel)
     }
     
-    func wasAdded(to scene: SKScene) {
-        
-    }
-    
     // MARK: - Methods
     
+    /**
+     Show the instruction for a given phase.
+     
+     - parameter phase: The phase that requires the instruction.
+     */
     public func showInstruction(for phase: Int) {
         
         instructionLabel.text = instructions[phase - 1]
         instructionLabel.show()
     }
     
+    ///Hides the instruction.
     private func hideInstruction() {
         instructionLabel.hide()
     }
     
+    /**
+     Shows the message of the ending phase.
+     
+     - parameter phase: The phase that is ending.
+     */
     public func showMessage(for phase: Int) {
         hideInstruction()
         
-        messageLabel.deliver(messages: messages[phase - 1]) {
+        messageLabel.displays(messages: messages[phase - 1]) {
             
             self.listener?.finishedDisplayingMessage(phase)
         }

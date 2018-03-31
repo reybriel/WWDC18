@@ -10,6 +10,7 @@ import CoreGraphics
 
 public extension CGFloat {
     
+    ///The absolute value of the number.
     public var absolute: CGFloat {
         return abs(self)
     }
